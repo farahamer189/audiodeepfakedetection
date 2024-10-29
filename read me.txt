@@ -1,0 +1,8 @@
+Download the model from the hugging face repository first in order to run it. 
+
+----->   https://huggingface.co/MelodyMachine/Deepfake-audio-detection-V2
+---------------------------------------------------------------------------
+
+Also you need to install it inside a virtual environement in python and install all the necassary requirements and modules and it's specific version
+
+
