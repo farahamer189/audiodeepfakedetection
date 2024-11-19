@@ -27,5 +27,7 @@ Deep Learning Frameworks: PyTorch for building and training the FCNN model.
 
 Directory :
 ├── old files                 # old versions and testing algorithms (original files)
+
 ├── audio detection system    # final system
+
 ├── README.md                 # Project documentation
