@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Spoof Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 25px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: green;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Audio Spoof Detection</h1>
+        <form id="audio-form" action="/predict" method="post" enctype="multipart/form-data">
+            <label for="file">Upload an audio file (wav/flac):</label>
+            <input type="file" name="file" id="file" accept=".wav,.flac" required><br>
+            <button type="submit">Detect</button>
+        </form>
+
+        <div id="result">
+            <h2>Prediction: <span id="prediction"></span></h2>
+            <p>Confidence: <span id="confidence"></span>%</p>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('audio-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const progressBar = document.getElementById('progress-bar');
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const confidence = data.confidence;
+                const label = data.label || 'Error';
+                document.getElementById('prediction').innerText = label;
+                document.getElementById('confidence').innerText = confidence.toFixed(2);
+
+                // Update the progress bar
+                progressBar.style.width = confidence + '%';
+
+                // Update progress bar color based on confidence
+                if (confidence > 50) {
+                    progressBar.style.backgroundColor = 'green';
+                } else if (confidence > 20) {
+                    progressBar.style.backgroundColor = 'orange';
+                } else {
+                    progressBar.style.backgroundColor = 'red';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error processing the audio.');
+            });
+        });
+    </script>
+
+</body>
+</html>
