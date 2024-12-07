@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face & Voice Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #4CAF50;
+            font-size: 2.5em;
+        }
+        .video-frame {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid #4CAF50;
+            margin-bottom: 20px;
+        }
+        .next-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .next-btn:hover {
+            background-color: #45a049;
+        }
+        .message {
+            font-size: 1.2em;
+            color: #555;
+            margin-top: 20px;
+        }
+        #recording-status {
+            color: #FF0000;
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        #face-status {
+            color: #0000FF;
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <h1>Face & Voice Recognition</h1>
+    {% if step == 1 %}
+        <form action="/next_step" method="POST">
+            <input type="text" name="name" placeholder="Enter your name" required><br><br>
+            <button type="submit" class="next-btn">Next</button>
+        </form>
+    {% elif step == 2 %}
+        <p id="face-status">Step 2: Face Recognition in Progress...</p>
+        <div>
+            <img src="{{ url_for('video_feed') }}" class="video-frame">
+        </div>
+        <form action="/next_step" method="POST">
+            <button type="submit" class="next-btn">Next</button>
+        </form>
+    {% elif step == 3 %}
+        <p>Step 3: Please say a phrase for voice recognition.</p>
+        <p id="recording-status">Recording...</p>
+        <form action="/next_step" method="POST">
+            <button type="submit" class="next-btn">Next</button>
+        </form>
+    {% elif step == 4 %}
+        <p>Process completed! Your data has been saved.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
