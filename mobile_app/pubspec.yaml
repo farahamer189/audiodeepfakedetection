@@ -1,0 +1,41 @@
+name: gradapp
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  qr_code_scanner: ^1.0.1  # Check for the latest version of the package
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.2.1
+  camera: ^0.10.5+4
+  record: ^5.0.4
+  permission_handler: ^11.0.1
+  path_provider: ^2.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0  
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/fonts/  # Ensure this folder exists and contains font files
+
+  fonts:
+    - family: DancingScript
+      fonts:
+        - asset: assets/fonts/Dancing_Script/DancingScript-VariableFont_wght.ttf
+  # Ensure this file exists
+
+    # - family: Playwrite
+    #   fonts:
+    #     - asset: assets/fonts/PlaywriteIN-VariableFont_wght.ttf  # Ensure correct path
+    #       weight: 700
